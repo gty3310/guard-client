@@ -46,9 +46,9 @@ def main(argv):
 
     bag = rosbag.Bag(img_bag) 
     bridge = CvBridge()
-    img_meta_data = []
+    img_meta_data = {}
 
-    i = 1
+    i = 0
 
     for topic, msg, t in bag.read_messages(topics=[img_topic]):
         img_field = {}
@@ -56,12 +56,14 @@ def main(argv):
         img_field["height"] = msg.height
         img_field["width"] = msg.width
         img_field["encoding"] = msg.encoding
-        img_meta_data.append(img_field)
 
         img = bridge.imgmsg_to_cv2(msg, "mono8")
         img = cv2.equalizeHist(img)
 
         img_file = str(i).zfill(10) + ".png"
+        
+        img_meta_data[img_file] = img_field
+        
         cv2.imwrite(img_dir + "/" + img_file, img)
 
         i += 1
