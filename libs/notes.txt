@@ -1,0 +1,11 @@
+Note on how frames are referenced in the db:
+
+Each detection ran frame represents the collection 
+of non-detection ran frames before and after the frame
+up till the previous and next detection ran frame
+
+ex: detection ran frames = 0.png, 100.png then the detections
+    for 0.png in the db will reference the frames from 0 to 100
+
+ex: detection ran frames = 0.png , 100.png, 200.png then the detections
+    for 100.png in the db will reference the frames from 0 to 200
